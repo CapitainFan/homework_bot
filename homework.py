@@ -42,12 +42,14 @@ logger.addHandler(handler)
 
 
 def send_message(bot, message):
+    """Отправляет сообщение в Telegram чат."""
     bot.send_message(TELEGRAM_CHAT_ID, message)
     logger.info('Бот отправил сообщение: '
                 f'{message}')
 
 
 def get_api_answer(current_timestamp):
+    """Делает запрос к эндпоинту API-сервиса."""
     timestamp = current_timestamp or int(time.time())
     params = {'from_date': timestamp}
     response = requests.get(ENDPOINT, headers=HEADERS, params=params)
@@ -73,6 +75,7 @@ def get_api_answer(current_timestamp):
 
 
 def check_response(response):
+    """Проверяет ответ API на корректность."""
     if type(response) == dict:
         homeworks = response.get('homeworks')
         if type(homeworks) == list:
@@ -88,6 +91,7 @@ def check_response(response):
 
 
 def parse_status(homework):
+    """Получает статус конкретной домашней работы."""
     homework_name = homework.get('homework_name')
     if homework_name:
         homework_status = homework.get('status')
@@ -107,6 +111,7 @@ def parse_status(homework):
 
 
 def check_tokens():
+    """Проверяет доступность переменных окружения."""
     token_dict = {
         'PRACTICUM_TOKEN': PRACTICUM_TOKEN,
         'TELEGRAM_TOKEN': TELEGRAM_TOKEN,
@@ -122,6 +127,7 @@ def check_tokens():
 
 
 def main():
+    """Основная логика работы бота."""
     if check_tokens():
         bot = telegram.Bot(token=TELEGRAM_TOKEN)
         current_timestamp = int(time.time())
@@ -154,7 +160,6 @@ def main():
         error = 'Отсутствует обязательная переменная окружения.'
         logger.critical(error)
         raise NameError(error)
-
 
 
 if __name__ == '__main__':
