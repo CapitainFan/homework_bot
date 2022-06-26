@@ -131,7 +131,6 @@ def main():
     if check_tokens():
         bot = telegram.Bot(token=TELEGRAM_TOKEN)
         current_timestamp = int(time.time())
-        container = ''
         while True:
             try:
                 response = get_api_answer(current_timestamp)
@@ -139,23 +138,21 @@ def main():
                 if homeworks:
                     message = parse_status(homeworks[0])
                     current_timestamp = response.get('current_date')
-                    if container != message:
-                        send_message(bot, message)
-                    else:
+                    if message:
                         logger.debug('Статус домашней работы не изменился')
+                    else:
+                        send_message(bot, message)
                 else:
                     message = 'Домашняя работа не найдена'
-                    if container != message:
-                        send_message(bot, message)
-                    else:
+                    if message:
                         logger.debug('Статус домашней работы не изменился')
+                    else:
+                        send_message(bot, message)
                 time.sleep(RETRY_TIME)
             except Exception as error:
                 message = f'Сбой в работе программы: {error}'
                 logger.error(message)
                 time.sleep(RETRY_TIME)
-            else:
-                container = message
     else:
         error = 'Отсутствует обязательная переменная окружения.'
         logger.critical(error)
