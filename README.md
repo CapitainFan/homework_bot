@@ -1,14 +1,13 @@
 # CheckHomeworkBot
 
 ### Описание
-  Telegram-бот, который будет обращаться к API сервиса яндекс-
-  практикум и узнавать статус моей домашней работы.
+  Telegram-бот, который будет обращаться к API сервиса яндекс-практикум и узнавать статус моей домашней работы.
 ### Технологии
-  Python 3.7
-  python-telegram-bot 
-  requests
-  Bot API
-  python-dotenv
+  Python 3.7 ; 
+  python-telegram-bot ; 
+  requests ; 
+  Bot API ; 
+  python-dotenv ; 
   logging
 ### Запуск проекта
   - Установите виртуальное окружение
